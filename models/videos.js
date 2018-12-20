@@ -12,20 +12,26 @@ const videoScehma = new Schema({
     required: true,
     trim: true,
   },
+  description: {
+    type: 'String',
+    trim: true,
+  },
   vid: {
     type: 'String',
-    required: true,
-    trim: true
   },
-//   date: {
-//     type: 'Date',
-//     required: true,
-//   },
+  chatid: {
+    type: 'String',
+  },
+  date: {
+    type: 'Date',
+    required: true,
+  },
   tags: {
     type: 'Array'
   },
   state: {
-      type:'String'
+      type:'String',
+      default: 'scheduled'
   }
 });
 

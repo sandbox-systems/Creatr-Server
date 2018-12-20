@@ -1,8 +1,9 @@
 const controller = require('../controllers/videos');
-const validateToken = require('../utils').validateToken;
+const validateToken = require('../util/utils').validateToken;
 
 module.exports = (router) => {
   router.route('/videos')
-    .post(controller.add)
+    .post(validateToken, controller.add)
     .get(validateToken, controller.getAll)
+    .delete(validateToken, controller.remove)
 };

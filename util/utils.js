@@ -16,7 +16,11 @@ module.exports = {
         req.decoded = result;
         next();
       } catch (err) {
-        throw new Error(err);
+        result = { 
+          error: `Authentication error. Token expired.`,
+          status: 401 
+        };
+        res.status(401).send(result);
       }
     } else {
       result = { 
