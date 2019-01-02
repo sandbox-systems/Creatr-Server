@@ -40,7 +40,7 @@ module.exports = {
       let result = {};
       let status = 200;
       if(!err) {
-        User.findOne({email}, (err, user) => {
+        User.findOne({email}).select('+password').exec((err, user) => {
           if (!err && user) {
             // We could compare passwords in our model instead of below as well
             bcrypt.compare(password, user.password).then(match => {

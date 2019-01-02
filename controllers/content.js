@@ -15,7 +15,7 @@ module.exports = {
       await mongoose.connect(connUri);
 
       const {user} = req.decoded;
-      const {_id: author} = await User.findOne({email:user});
+      const {_id: author} = await User.findOne({email:user}); // get user info base on auth token
 
       const { title, description, video, tags, data } = req.body;
       let content = new Content({ title, description, video, tags, author, data});
@@ -37,7 +37,10 @@ module.exports = {
     try {
       await mongoose.connect(connUri);
 
-      const content  = await Content.find().populate().sort({ _id: -1 }).exec()
+      const content  = await Content.find()
+        .populate(['author','video']) // fill in data for author and video refs
+        .sort({ _id: -1 }) // reverse order (recent first)
+        .exec()
 
       result.status = status;
       result.result = content;

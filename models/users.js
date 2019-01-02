@@ -17,7 +17,8 @@ const userSchema = new Schema({
   password: {
     type: 'String',
     required: true,
-    trim: true
+    trim: true,
+    select: false
   },
   firstname: {
     type: 'String',
@@ -30,7 +31,9 @@ const userSchema = new Schema({
     trim: true,
   },
   role: {
-    type: 'String'
+    type: 'String',
+    required: 'true',
+    default: 'student'
   }
 });
 
