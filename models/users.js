@@ -34,6 +34,11 @@ const userSchema = new Schema({
     type: 'String',
     required: 'true',
     default: 'student'
+  },
+  section: {
+    type: Array,
+    required: 'false',
+    default: ["Free"]
   }
 });
 

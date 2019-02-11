@@ -16,6 +16,7 @@ module.exports = {
         req.decoded = result;
         next();
       } catch (err) {
+        console.log
         result = { 
           error: `Authentication error. Token expired.`,
           status: 401 

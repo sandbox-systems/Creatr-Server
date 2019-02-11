@@ -40,5 +40,29 @@ module.exports = {
         res.status(status).send(result);
       }
     });
+  },
+  
+  update: async (req, res) => {
+    let result = {};
+    let status = 200;
+
+    try {
+      await mongoose.connect(connUri);
+
+      const user = await User.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        {new: true}
+      )
+
+      result.status = status;
+      result.result = user;
+      res.status(status).send(result);
+    } catch (error) {
+      console.log(error);
+      let status = 500;
+      result.error = error;
+      res.status(status).send(result);
+    }
   }
 };

@@ -28,8 +28,11 @@
     "jsonwebtoken": "^8.3.0",
     "moment": "^2.22.2",
     "mongoose": "^5.2.17",
+    "mongoose-socket.io": "^1.2.1",
+    "nodemailer": "^5.1.1",
     "opn": "^5.4.0",
-    "server-destroy": "^1.0.1"
+    "server-destroy": "^1.0.1",
+    "socket.io": "^2.2.0"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
