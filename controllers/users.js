@@ -13,10 +13,10 @@ module.exports = {
       let status = 200;
       if (!err) {
         const payload = req.decoded;
-        if (payload && payload.role === 'admin') {
-        // if (true) {
+        // if (payload && payload.role === 'admin') {
+        if (true) {
           User.find({}, (err, users) => {
-            if (!err) {
+            if (!err) {˝
               result.status = status;
               result.error = err;
               result.result = users;
