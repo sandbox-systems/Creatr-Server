@@ -39,7 +39,8 @@ const userSchema = new Schema({
     type: Array,
     required: 'false',
     default: ["Free"]
-  }
+  },
+  
 });
 
 // encrypt password before save

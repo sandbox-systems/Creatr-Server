@@ -32,6 +32,11 @@ const videoScehma = new Schema({
   state: {
       type:'String',
       default: 'scheduled'
+  },
+  section: {
+    type: Array,
+    required: 'true',
+    default: ["Free"]
   }
 });
 

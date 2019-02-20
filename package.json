@@ -23,6 +23,7 @@
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
     "dotenv": "^6.0.0",
+    "email-templates": "^5.0.3",
     "express": "^4.16.3",
     "googleapis": "^35.0.0",
     "jsonwebtoken": "^8.3.0",
@@ -31,6 +32,7 @@
     "mongoose-socket.io": "^1.2.1",
     "nodemailer": "^5.1.1",
     "opn": "^5.4.0",
+    "pug": "^2.0.3",
     "server-destroy": "^1.0.1",
     "socket.io": "^2.2.0"
   },

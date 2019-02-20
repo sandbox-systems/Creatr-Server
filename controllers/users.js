@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
 const connUri = process.env.MONGO_LOCAL_CONN_URL;
 const User = require('../models/users');
 

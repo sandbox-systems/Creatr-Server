@@ -15,7 +15,8 @@ module.exports = {
         { _id: req.body.id },
         {
           vid: broadcast.id,
-          state: "live"
+          state: "live",
+          section: video.section
         }
       );
       video = await Video.findById(req.body.id);
@@ -54,8 +55,12 @@ module.exports = {
     let result = {};
     let status = 200;
     try {
+      const {section} = req.decoded;
+      console.log(section);
       await mongoose.connect(connUri);
-      let video = await Video.findOne({ state: "live" });
+      let video = await Video.findOne({ 
+        state: "live", 
+        section:{$in:section}});
       const livestream = await youtube.getLivestream();
       // video.streamkey = livestream.cdn.ingestionInfo.streamName
       //console.log(video)

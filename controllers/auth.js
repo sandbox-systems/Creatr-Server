@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const mail = require('../util/mail')
 
 const connUri = process.env.MONGO_LOCAL_CONN_URL;
 const User = require('../models/users');
@@ -14,15 +15,23 @@ module.exports = {
         const { email, password, firstname, lastname, role } = req.body;
         const user = new User({ email, password, firstname, lastname, role }); // document = instance of a model
         // TODO: We can hash the password here as well before we insert
-        user.save((err, user) => {
+        user.save(async (err, user) => {
           if (!err) {
             result.status = status;
             result.result = user;
+            mail.sendMessage({
+              to:  await mail.getEmailsByRole('admin'),
+              sub: 'New User Registration for Creatr',
+              txt: `Name: ${user.firstname} ${user.lastname}\nEmail: ${user.email}\nClass Section: ${user.section}`
+            })
+              .then(res=> console.log(res))
+              .catch(err  => console.log(err));
           } else {
             status = 500;
             result.status = status;
             result.error = err;
           }
+          
           res.status(status).send(result);
         });
       } else {
@@ -47,7 +56,7 @@ module.exports = {
               if (match) {
                 status = 200;
                 // Create a token
-                const payload = { user: user.email, role: user.role };
+                const payload = { user: user.email, role: user.role, section: user.section };
                 const options = { expiresIn: '2d', issuer: 'https://scotch.io' };
                 const secret = process.env.JWT_SECRET;
                 const token = jwt.sign(payload, secret, options);
@@ -60,6 +69,7 @@ module.exports = {
                 result.status = status;
                 result.error = `Authentication error`;
               }
+              
               res.status(status).send(result);
             }).catch(err => {
               status = 500;
@@ -82,21 +92,25 @@ module.exports = {
       }
     });
   },
-  refresh: (req, res) => {
-    const {user, role} = req.decoded;
+  refresh: async (req, res) => {
       let result = {};
       let status = 200;
             // We could compare passwords in our model instead of below as well
-
+      const user = await User.findOne({email:req.decoded.user})
       status = 200;
       // Create a token
-      const payload = { user, role};
+      const payload = {
+        user: user.email,
+        role: user.role,
+        section: user.section,
+      } ;
       const options = { expiresIn: '2d', issuer: 'https://scotch.io' };
       const secret = process.env.JWT_SECRET;
       const token = jwt.sign(payload, secret, options);
 
       result.token = token;
       result.status = status;
+      result.result = user;
     
       res.status(status).send(result);
   },

@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const youtube = require("../util/youtube");
 const connUri = process.env.MONGO_LOCAL_CONN_URL;
+const moment = require('moment')
+const mail = require('../util/mail')
 const Video = require("../models/videos");
 
 module.exports = {
@@ -12,12 +14,19 @@ module.exports = {
         let result = {};
         let status = 201;
         if (!err) {
-          const { name, description, tags, date } = req.body;
-          const video = new Video({ name, description, tags, date }); // document = instance of a model
-          video.save((err, user) => {
+          const { name, description, tags, date, section } = req.body;
+          const video = new Video({ name, description, tags, date, section }); // document = instance of a model
+          video.save(async (err, video) => {
             if (!err) {
               result.status = status;
-              result.result = user;
+              result.result = video;
+              mail.sendMessage({
+                to:  await mail.getEmailsBySection(video.section),
+                sub: 'New Livestream Scheduled',
+                txt: `Title: ${video.name}\nClass: ${video.section.join(", ")}\nTime: ${moment(video.date).format("dddd, MMMM Do YYYY, h:mm a")}`
+              })
+                .then(res=> console.log(res))
+                .catch(err  => console.log(err));
             } else {
               status = 500;
               result.status = status;

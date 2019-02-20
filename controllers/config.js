@@ -4,7 +4,6 @@ const connUri = process.env.MONGO_LOCAL_CONN_URL;
 const User = require('../models/users');
 const Video = require('../models/videos');
 const Content = require('../models/content');
-const Message = require('../models/messages')
 
 
 module.exports = {
@@ -18,14 +17,12 @@ module.exports = {
       const {user} = req.decoded;
       const {_id: author} = await User.findOne({email:user}); // get user info base on auth token
 
-      const { message, video } = req.body;
-      let messages = new Message({ message, video, author});
-      messages = await messages.save()
-      messages = await Message.populate(messages,  {path:"author"})
-      console.log(messages)
+      const { title, description, video, tags, data } = req.body;
+      let content = new Content({ title, description, video, tags, author, data});
+      content = await content.save()
+
       result.status = status;
-      result.result = messages;
-      req.io.emit('message',messages)
+      result.result = content;
       res.status(status).send(result);
     } catch (error) {
       console.log(error);
@@ -39,16 +36,14 @@ module.exports = {
     let status = 200;
     try {
       await mongoose.connect(connUri);
-      const {video} = req.params;
-      console.log(req.body)
-      const messages  = await Message
-        .find({video})
-        .populate(['author']) // fill in data for author and video refs
+
+      const content  = await Content.find()
+        .populate(['author','video']) // fill in data for author and video refs
         .sort({ _id: -1 }) // reverse order (recent first)
         .exec()
 
       result.status = status;
-      result.result = messages;
+      result.result = content;
       res.status(status).send(result);
     } catch (error) {
       console.log(error);
