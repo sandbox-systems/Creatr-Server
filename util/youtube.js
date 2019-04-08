@@ -58,10 +58,10 @@ module.exports = {
                             "broadcastStreamDelayMs": 0,
                         },
                         "enableDvr": false,
-                        "enableEmbed": true,
+                        "enableEmbed": false,
                         "recordFromStart": true,
                         "enableContentEncryption": false,
-                        "startWithSlate": true,
+                        "startWithSlate": false,
                         "latencyPreference": "ultralow"
                         },
                         "status": {

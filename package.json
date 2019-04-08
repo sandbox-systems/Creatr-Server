@@ -40,5 +40,8 @@
     "cross-env": "^5.2.0",
     "morgan": "^1.9.1",
     "nodemon": "^1.18.4"
+  },
+  "resolutions": {
+    "**/event-stream": "^4.0.1"
   }
 }

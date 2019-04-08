@@ -24,8 +24,8 @@ module.exports = {
       result.result = video;
       res.status(status).send(result);
     } catch (error) {
-      // res.status(status).send(result);
-      return next(error);
+      res.status(status).send(result);
+      // return next(error);
       console.log(error);
     }
   },

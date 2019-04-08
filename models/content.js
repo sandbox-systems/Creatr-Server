@@ -12,6 +12,11 @@ const contentScehma = new Schema({
     required: true,
     trim: true,
   },
+  type: {
+    type: 'String',
+    required: false,
+    default: 'user'
+  },
   author: {
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'User',
@@ -39,6 +44,11 @@ const contentScehma = new Schema({
     type: 'String',
     default: 'published',
     required: true
+  },
+  section: {
+    type: Array,
+    required: 'true',
+    default: ["Free"]
   }
 });
 
