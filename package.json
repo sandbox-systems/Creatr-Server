@@ -32,7 +32,7 @@
     "mongoose-socket.io": "^1.2.1",
     "nodemailer": "^5.1.1",
     "opn": "^5.4.0",
-    "pug": "^2.0.3",
+    "pug": "^3.0.1",
     "server-destroy": "^1.0.1",
     "socket.io": "^2.2.0"
   },
